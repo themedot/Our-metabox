@@ -22,8 +22,7 @@ class OurMetabox {
             'omb_post_location', 
             __( 'Location Info', 'our-metabox' ), 
             [$this, 'omb_display_post_location' ], 
-            'post',
-            'side'
+            'post'
             
         );
     }
