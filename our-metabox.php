@@ -13,21 +13,31 @@ Domain Path: /languages
 
 class OurMetabox {
     public function __construct() {
-        add_action( 'plugins_loaded', [ $this, 'omb_load_textdomain' ] );
-        add_action( 'admin_menu', [ $this, 'omb_add_metabox' ] );
+        add_action( 'plugins_loaded', [$this, 'omb_load_textdomain'] );
+        add_action( 'admin_menu', [$this, 'omb_add_metabox'] );
+        add_action( 'save_post', [$this, 'omb_save_location'] );
+    }
+
+    function omb_save_location( $post_id ) {
+        $location = isset( $_POST['omb_location'] ) ? $_POST['omb_location'] : '';
+        if ( $location = '' ) {
+            return $post_id;
+        }
+        add_post_meta( $post_id, 'omb_location', $location );
     }
 
     function omb_add_metabox() {
-        add_meta_box( 
-            'omb_post_location', 
-            __( 'Location Info', 'our-metabox' ), 
-            [$this, 'omb_display_post_location' ], 
+        add_meta_box(
+            'omb_post_location',
+            __( 'Location Info', 'our-metabox' ),
+            [$this, 'omb_display_post_location'],
             'post'
-            
+
         );
     }
 
-    function omb_display_post_location() {
+    function omb_display_post_location($post) {
+        $location = get_post_meta($post->ID,'omb_location',true);
         $label        = __( 'Location', 'our-metabox' );
         $metabox_html = <<<EOD
         <p>
