@@ -19,6 +19,7 @@ class OurMetabox {
     }
 
     function omb_save_location( $post_id ) {
+        $nonce = isset( $_POST['omb_location_field'] ) ? $_POST['omb_location_field'] : '';
         $location = isset( $_POST['omb_location'] ) ? $_POST['omb_location'] : '';
         if ( $location == '' ) {
             return $post_id;
@@ -40,6 +41,7 @@ class OurMetabox {
 
     function omb_display_post_location($post) {
         $location = get_post_meta($post->ID,'omb_location',true);
+        wp_nonce_field( 'omb_location', 'omb_location_field');
         $label        = __( 'Location', 'our-metabox' );
         $metabox_html = <<<EOD
         <p>
