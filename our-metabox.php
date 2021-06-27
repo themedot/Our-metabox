@@ -18,7 +18,14 @@ class OurMetabox {
     }
 
     function omb_add_metabox() {
-        add_meta_box( 'omb_post_location', __( 'Location Info', 'our-metabox' ), [ $this, 'omb_display_post_location' ], 'post' );
+        add_meta_box( 
+            'omb_post_location', 
+            __( 'Location Info', 'our-metabox' ), 
+            [$this, 'omb_display_post_location' ], 
+            'post',
+            'side'
+            
+        );
     }
 
     function omb_display_post_location() {
