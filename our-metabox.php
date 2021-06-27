@@ -42,7 +42,7 @@ class OurMetabox {
         $metabox_html = <<<EOD
         <p>
             <label for="omb_location">{$label}</label>
-            <input type="text" name="omb_location" id="omb_location >
+            <input type="text" name="omb_location" id="omb_location" value="{$location}" />
         </p>
         EOD;
         echo $metabox_html;
