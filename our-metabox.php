@@ -19,7 +19,7 @@ class OurMetabox {
     }
 
     function omb_save_location( $post_id ) {
-        $nonce = isset( $_POST['omb_location_field'] ) ? $_POST['omb_location_field'] : '';
+        $nonce = isset( $_POST['omb_location_field'] ) ? $_POST['omb_location'] : '';
         $location = isset( $_POST['omb_location'] ) ? $_POST['omb_location'] : '';
         if ( $location == '' ) {
             return $post_id;
