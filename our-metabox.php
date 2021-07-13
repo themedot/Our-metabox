@@ -12,7 +12,7 @@ Domain Path: /languages
  */
 
 class OurMetabox {
-    public function __construct() 
+    public function __construct() : void
     {
         add_action( 'plugins_loaded', [$this, 'omb_load_textdomain'] );
         add_action( 'admin_menu', [$this, 'omb_add_metabox'] );
