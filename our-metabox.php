@@ -16,6 +16,17 @@ class OurMetabox {
         add_action('plugin_loaded',array($this,'omb_load_textdomain'));
 
         add_action('admin_menu', array($this,'omb_add_metabox'));
+
+        add_action( 'save_post', array($this,'omb_save_location'));
+    }
+
+    public function omb_save_location($post_id)
+    {
+        $location = isset($_POST["omb_location"])? $_POST["omb_location"]:"";
+        if($location==''){
+            return $post_id;
+        }
+        add_post_meta( $post_id, 'omb_location', $location);
     }
 
    public function omb_add_metabox(){
@@ -24,8 +35,8 @@ class OurMetabox {
             __('Location Info','our-metabox'), 
             array($this,'omb_display_post_location'), 
             'post',
-            'side',
-            'low'
+            'normal',
+            'default'
             );
     }
 
@@ -35,7 +46,7 @@ class OurMetabox {
         $email =__("Email", "our-metabox");
         $metabox_html = <<<EOD
             <P>
-                <label for="omb_location">{$label}</label>
+                <label for="omb_location">{$label}:</label>
                 <input type="text" name="omb_location" id="omb_location" /></br>
                 <label for="omb_location">{$email}</label>
                 <input type="email" name="omb_location" id="omb_location" />
