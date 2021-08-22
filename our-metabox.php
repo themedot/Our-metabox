@@ -20,12 +20,44 @@ class OurMetabox {
         add_action( 'save_post', array($this,'omb_save_location'));
     }
 
+    private function is_secured($nonce_field,$action,$post_id)
+    {
+        $nonce = isset($_POST[$nonce_field]) ? $_POST[$nonce_field]:"";
+
+        if($nonce == ''){
+            return false;
+        }
+
+        if(!wp_verify_nonce( $nonce, $action )){
+            return false;
+        }
+
+        if(!current_user_can( 'edit_post', $post_id )){
+            return false;
+        }
+
+        if(wp_is_post_autosave($post_id)){
+            return false;
+        }
+
+        if(wp_is_post_revision( $post_id )){
+            return false;
+        }
+        return true;
+    }
+
+
     public function omb_save_location($post_id)
     {
+        if(!$this->is_secured('omb_location_field','omb_location',$post_id)){
+            return $post_id;
+        }
         $location = isset($_POST["omb_location"])? $_POST["omb_location"]:"";
+
         if($location==''){
             return $post_id;
         }
+
         update_post_meta( $post_id, 'omb_location', $location);
     }
 
