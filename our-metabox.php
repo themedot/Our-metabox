@@ -19,9 +19,9 @@ class OurMetabox {
         add_action( 'admin_enqueue_scripts',array($this,'omb_admin_assets'));
     }
 
-    public function omb_admin_assets()
+    function omb_admin_assets()
     {
-        wp_enqueue_style( 'omb-admin-style', plugin_dir_url(), $deps:array, $ver:string|boolean|null, $media:string )
+        wp_enqueue_style( 'omb-admin-style', plugin_dir_url(__FILE__)."assets/admin/css/style.css", null, time());
     }
 
     private function is_secured($nonce_field,$action,$post_id)
