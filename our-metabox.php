@@ -64,6 +64,7 @@ class OurMetabox {
         update_post_meta( $post_id, 'omb_location', $location);
         update_post_meta( $post_id, 'omb_country', $country);
         update_post_meta( $post_id, 'omb_is_favorite', $is_favorite);
+        update_post_meta( $post_id, 'omb_clr', $colors);
     }
 
    public function omb_add_metabox(){
@@ -91,6 +92,10 @@ class OurMetabox {
 
         $label4 = __("Colors","our-metabox");
         $colors = array('pink','yellow','blue','red','black','green','magenta');
+        $saved_colors = get_post_meta( $post->ID, 'omb_clr', true );
+
+        print_r($saved_colors);
+
 
         wp_nonce_field( 'omb_location', 'omb_location_field');
 
@@ -111,9 +116,11 @@ class OurMetabox {
         EOD;
 
             foreach($colors as $color){
+                $_color = ucwords($color);
+                $checked = in_array($color, $saved_colors) ? 'checked'  :'';
                 $metabox_html .= <<<EOD
-                    <label for="omb_clr_{$color}">{$color}</label>
-                    <input type="checkbox" name="omb_clr[]" id="omb_clr_{$color}" value="{$color}"/>
+                    <label for="omb_clr_{$color}">{$_color}</label>
+                    <input type="checkbox" name="omb_clr[]" id="omb_clr_{$color}" value="{$color}" {$checked} />
                 EOD;
             }
             $metabox_html .= "</p>"; 
