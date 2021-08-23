@@ -56,6 +56,8 @@ class OurMetabox {
         $country = isset($_POST["omb_country"])? $_POST["omb_country"]:"";
         $is_favorite = isset($_POST["omb_is_favorite"]) ? $_POST["omb_is_favorite"] : 0;
         $colors = isset($_POST["omb_clr"]) ? $_POST["omb_clr"] : array();
+        $colors2 = isset($_POST["omb_color"]) ? $_POST["omb_color"] : '';
+        $select_color = isset($_POST["select_color"]) ? $_POST["select_color"] : '';
 
         if($location=='' || $country==''){
             return $post_id;
@@ -65,7 +67,10 @@ class OurMetabox {
         update_post_meta( $post_id, 'omb_country', $country);
         update_post_meta( $post_id, 'omb_is_favorite', $is_favorite);
         update_post_meta( $post_id, 'omb_clr', $colors);
+        update_post_meta( $post_id, 'omb_color', $colors2);
+        update_post_meta( $post_id, 'omb_select_color', $select_color);
     }
+
 
    public function omb_add_metabox(){
         add_meta_box( 
@@ -75,7 +80,7 @@ class OurMetabox {
             'post',
             'normal',
             'default'
-            );
+        );
     }
 
     public function omb_display_metabox($post)
@@ -94,8 +99,13 @@ class OurMetabox {
         $colors = array('pink','yellow','blue','red','black','green','magenta');
         $saved_colors = get_post_meta( $post->ID, 'omb_clr', true );
 
-        print_r($saved_colors);
+        $saved_radio_color = get_post_meta( $post->ID, 'omb_color', true );
 
+        $select_color = get_post_meta( $post->ID, 'omb_select_color', true);
+
+        // print_r($saved_radio_color);
+
+        
 
         wp_nonce_field( 'omb_location', 'omb_location_field');
 
@@ -116,14 +126,40 @@ class OurMetabox {
         EOD;
 
             foreach($colors as $color){
+
                 $_color = ucwords($color);
-                $checked = in_array($color, $saved_colors) ? 'checked'  :'';
+                $checked =  in_array($color, $saved_colors) ? "checked='checked'" : '';
                 $metabox_html .= <<<EOD
                     <label for="omb_clr_{$color}">{$_color}</label>
                     <input type="checkbox" name="omb_clr[]" id="omb_clr_{$color}" value="{$color}" {$checked} />
                 EOD;
             }
             $metabox_html .= "</p>"; 
+
+            $metabox_html .= '<p> <label > ' . $label4 . ':</label> </p>';
+
+            foreach($colors as $color){
+                $_color = ucwords($color);
+                $checked = $color == $saved_radio_color ? 'checked': '';
+                $metabox_html .= <<<EOD
+                    <label for="omb_color_{$color}">{$_color}</label>
+                    <input type="radio" name="omb_color" id="omb_color_{$color}" value="{$color}" {$checked}/>
+                EOD;
+            }
+
+            $metabox_html .= '<p> <label> '. $label4 . ': </label> ';
+
+            $metabox_html .= '<select name="select_color">';
+
+            foreach ( $colors as $color ) {
+                $selected = $color == $select_color ? 'selected="selected"' : '';
+                $option = "<option value='{$color}'{$selected}>".ucwords($color)."</option>";
+                $metabox_html .= $option;
+            }
+               
+            $metabox_html .= '</select></p>';
+            
+
             echo $metabox_html;
     }
 
