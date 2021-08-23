@@ -14,10 +14,14 @@ Domain Path: /languages
 class OurMetabox {
     public function __construct(){
         add_action('plugin_loaded',array($this,'omb_load_textdomain'));
-
         add_action('admin_menu', array($this,'omb_add_metabox'));
-
         add_action( 'save_post', array($this,'omb_save_metabox'));
+        add_action( 'admin_enqueue_scripts',array($this,'omb_admin_assets'));
+    }
+
+    public function omb_admin_assets()
+    {
+        wp_enqueue_style( 'omb-admin-style', plugin_dir_url(), $deps:array, $ver:string|boolean|null, $media:string )
     }
 
     private function is_secured($nonce_field,$action,$post_id)
@@ -77,10 +81,42 @@ class OurMetabox {
             'omb_post_location',
             __('Location Info','our-metabox'), 
             array($this,'omb_display_metabox'), 
-            'post',
+            array('post','page'),
             'normal',
             'default'
         );
+        add_meta_box( 
+            'omb_book_info',
+            __('Book Info','our-metabox'), 
+            array($this,'omb_book_info'), 
+            array('book')
+        );
+    }
+
+    public function omb_book_info($post)
+    {
+     wp_nonce_field( 'omb_book', 'omb_book_nonce');
+     
+     $metabox_html = <<<EOD
+        <div class="field">
+            <div class="field_c">
+                <div class="label_c" for="book_author">Book Author</div>
+                <div class="input_c">
+                    <input text ="text" id="book_author">
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <div class="field_c">
+                <div class="label_c" for="book_isbn">Book ISBN</div>
+                <div class="input_c">
+                    <input text ="text" id="book_isbn">
+                </div>
+            </div>
+        </div>
+     EOD;
+
+     echo $metabox_html;
     }
 
     public function omb_display_metabox($post)
