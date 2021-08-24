@@ -1,0 +1,23 @@
+.fields{
+    margin-top: 10px;
+    }
+
+.field_c{
+    padding-bottom: 23px;
+    }
+    
+.label_c{
+    width: 15%;
+    float: left;
+    }
+.label_c label{
+    line-height: 20px;
+    }
+.input_c{
+    width: 85%;
+    float: left;
+    }
+    
+.float_c{
+    clear: both;
+    }

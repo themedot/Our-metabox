@@ -16,7 +16,7 @@ class OurMetabox {
         add_action('plugin_loaded',array($this,'omb_load_textdomain'));
         add_action('admin_menu', array($this,'omb_add_metabox'));
         add_action( 'save_post', array($this,'omb_save_metabox'));
-        add_action( 'admin_enqueue_scripts',array($this,'omb_admin_assets'));
+        add_action( 'admin_enqueue_scripts', array($this,'omb_admin_assets'));
     }
 
     function omb_admin_assets()
@@ -98,22 +98,40 @@ class OurMetabox {
      wp_nonce_field( 'omb_book', 'omb_book_nonce');
      
      $metabox_html = <<<EOD
-        <div class="field">
+        <div class="fields">
             <div class="field_c">
-                <div class="label_c" for="book_author">Book Author</div>
+                <div class="label_c" >
+                    <label for="book_author">Book Author</label>
+                </div>
                 <div class="input_c">
                     <input text ="text" id="book_author">
                 </div>
             </div>
+            <div class="float_c"></div>
         </div>
-        <div class="field">
+        <div class="fields">
             <div class="field_c">
-                <div class="label_c" for="book_isbn">Book ISBN</div>
+                <div class="label_c" >
+                    <label for="book_isbn">Book ISBN</label>
+                </div>
                 <div class="input_c">
                     <input text ="text" id="book_isbn">
                 </div>
             </div>
+            <div class="float_c"></div>
         </div>
+        <div class="fields">
+            <div class="field_c">
+                <div class="label_c" >
+                    <label for="book_publish">Publish Year</label>
+                </div>
+                <div class="input_c">
+                    <input text ="text" id="publish_year">
+                </div>
+            </div>
+            <div class="float_c"></div>
+        </div>
+        
      EOD;
 
      echo $metabox_html;
