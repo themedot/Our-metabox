@@ -16,8 +16,16 @@
 .input_c{
     width: 85%;
     float: left;
-    }
+}
+
+.input_c button{
+    height: 30px;
+}    
     
 .float_c{
     clear: both;
-    }
+}
+
+.input,.button{
+    border: none;
+}
