@@ -66,9 +66,9 @@ class OurMetabox {
         $colors2 = isset($_POST["omb_color"]) ? $_POST["omb_color"] : '';
         $select_color = isset($_POST["select_color"]) ? $_POST["select_color"] : '';
 
-        if($location=='' || $country==''){
-            return $post_id;
-        }
+        // if($location=='' || $country==''){
+        //     return $post_id;
+        // }
 
         update_post_meta( $post_id, 'omb_location', $location);
         update_post_meta( $post_id, 'omb_country', $country);
@@ -182,6 +182,7 @@ class OurMetabox {
                 <label >{$label4}:</label>
         EOD;
 
+            $saved_colors = is_array($saved_colors)?$saved_colors:array();
             foreach($colors as $color){
 
                 $_color = ucwords($color);
