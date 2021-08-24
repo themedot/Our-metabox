@@ -22,6 +22,9 @@ class OurMetabox {
     function omb_admin_assets()
     {
         wp_enqueue_style( 'omb-admin-style', plugin_dir_url(__FILE__)."assets/admin/css/style.css", null, time());
+        wp_enqueue_style( 'jquery-ui-css','//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css', null, time());
+        wp_enqueue_script( 'omb-admin-js', plugin_dir_url( __FILE__ )."assets/admin/js/main.js",array('jquery','jquery-ui-datepicker'),time(),true);
+
     }
 
     private function is_secured($nonce_field,$action,$post_id)
@@ -126,7 +129,7 @@ class OurMetabox {
                     <label for="book_publish">Publish Year</label>
                 </div>
                 <div class="input_c">
-                    <input text ="text" id="publish_year">
+                    <input text ="text" class="omb_dp" id="publish_year">
                 </div>
             </div>
             <div class="float_c"></div>
