@@ -6,11 +6,17 @@ var frame;
           selectOtherMonths: true
         });
         $("#upload_image").on("click",function(){
+
+
+          if ( frame ) {
+            frame.open();
+            return false;
+          }
           
           frame = wp.media({
-            title: "Upload Image",
+            title: "Select Image",
             button:{
-              text:"Select Image"
+              text:"Insert Image"
             },
             multiple:false
           });

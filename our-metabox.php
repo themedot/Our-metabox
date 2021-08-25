@@ -158,6 +158,9 @@ class OurMetabox {
                 </div>
                 <div class="input_c">
                     <button class="button" id="upload_image">Upload Image</button>
+                    <input text="hidden" name="omb_image_id" id="omb_image_id" />
+                    <input text="hidden" name="omb_image_url" id="omb_image_url"/>
+                    <div id="container"></div>
                 </div>
             </div>
             <div class="float_c"></div>
