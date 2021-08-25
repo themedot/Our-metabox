@@ -1,6 +1,12 @@
 var frame;
 ;(function($){
     $(document).ready(function() {
+
+      var imageUrl = $("#omb_image_url").val();
+      if(imageUrl){
+        $("#image_container").html(`<img src="${imageUrl}"/>`);
+      }
+
         $(".omb_dp" ).datepicker({
           showOtherMonths: true,
           selectOtherMonths: true
@@ -26,7 +32,7 @@ var frame;
             $("#omb_image_id").val(attachment.id);
             $("#omb_image_url").val(attachment.sizes.thumbnail.url);
             console.log(attachment);
-            $("#image_container").html(`<img src="${attachment.sizes.thumbnail.url}" id='${attachment.id}' />`);
+            $("#image_container").html(`<img src="${attachment.sizes.thumbnail.url}"/>`);
           });
 
           frame.open();
