@@ -115,6 +115,12 @@ class OurMetabox {
             array($this,'omb_image_info'), 
             array('post')
         );
+        add_meta_box( 
+            'omb_gallery_info',
+            __('Gallery Info','our-metabox'), 
+            array($this,'omb_gallery_info'), 
+            array('post')
+        );
     }
 
     public function omb_book_info($post)
@@ -168,6 +174,32 @@ class OurMetabox {
      $image_id =esc_attr(get_post_meta( $post->ID, 'omb_image_id', true));
      $image_url =esc_attr(get_post_meta( $post->ID, 'omb_image_url', true));  
      wp_nonce_field( 'omb_image', 'omb_image_nonce');
+     
+     $metabox_html = <<<EOD
+        <div class="fields">
+            <div class="field_c">
+                <div class="label_c" >
+                    <label>Image</label>
+                </div>
+                <div class="input_c">
+                    <button class="button" id="upload_image">Upload Image</button>
+                    <input type="hidden" name="omb_image_id" id="omb_image_id" value="{$image_id}"/>
+                    <input type="hidden" name="omb_image_url" id="omb_image_url" value="{$image_url}"/>
+                    <div id="image_container"></div>
+                </div>
+            </div>
+            <div class="float_c"></div>
+        </div>  
+     EOD;
+
+     echo $metabox_html;
+    }
+    public function omb_gallery_info($post)
+    {
+     
+     $image_id =esc_attr(get_post_meta( $post->ID, 'omb_images_id', true));
+     $image_url =esc_attr(get_post_meta( $post->ID, 'omb_images_url', true));  
+     wp_nonce_field( 'omb_gallery', 'omb_gallery_nonce');
      
      $metabox_html = <<<EOD
         <div class="fields">
