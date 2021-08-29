@@ -1,4 +1,4 @@
-var frame;
+var frame, gframe;
 ;(function($){
     $(document).ready(function() {
 
@@ -11,8 +11,8 @@ var frame;
           showOtherMonths: true,
           selectOtherMonths: true
         });
-        $("#upload_image").on("click",function(){
 
+        $("#upload_image").on("click",function(){
 
           if ( frame ) {
             frame.open();
@@ -28,6 +28,34 @@ var frame;
           });
 
           frame.on('select',function(){
+            attachment = frame.state().get('selection').first().toJSON();
+            $("#omb_image_id").val(attachment.id);
+            $("#omb_image_url").val(attachment.sizes.thumbnail.url);
+            console.log(attachment);
+            $("#image_container").html(`<img src="${attachment.sizes.thumbnail.url}"/>`);
+          });
+
+          frame.open();
+          return false;
+        });
+
+// this section for gallery
+        $("#upload_images").on("click",function(){
+
+          if ( gframe ) {
+            gframe.open();
+            return false;
+          }
+          
+          gframe = wp.media({
+            title: "Select Images",
+            button:{
+              text:"Insert Images"
+            },
+            multiple:true
+          });
+
+          gframe.on('select',function(){
             attachment = frame.state().get('selection').first().toJSON();
             $("#omb_image_id").val(attachment.id);
             $("#omb_image_url").val(attachment.sizes.thumbnail.url);
