@@ -215,15 +215,17 @@ class OurMetabox {
      $images_id =esc_attr(get_post_meta( $post->ID, 'omb_images_id', true));
      $images_url =esc_attr(get_post_meta( $post->ID, 'omb_images_url', true));  
      wp_nonce_field( 'omb_gallery', 'omb_gallery_nonce');
+
+     $button_label = __("Upload Image");
      
      $metabox_html = <<<EOD
         <div class="fields">
             <div class="field_c">
                 <div class="label_c" >
-                    <label>Image</label>
+                    <label>Gallery</label>
                 </div>
                 <div class="input_c">
-                    <button class="button" id="upload_image">Upload Image</button>
+                    <button class="button" id="upload_image">{$button_label}</button>
                     <input type="hidden" name="omb_images_id" id="omb_images_id" value="{$images_id}"/>
                     <input type="hidden" name="omb_images_url" id="omb_images_url" value="{$images_url}"/>
                     <div style="width:100%; height=auto;" id="images_container"></div>
