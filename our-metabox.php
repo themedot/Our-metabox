@@ -19,6 +19,17 @@ class OurMetabox {
         add_action( 'save_post', array($this,'omb_save_image'));
         add_action( 'save_post', array($this,'omb_save_gallery'));
         add_action( 'admin_enqueue_scripts', array($this,'omb_admin_assets'));
+        
+        add_filter( 'user_contactmethods', array($this,'omb_user_contact_methods') );
+    }
+
+
+    function omb_user_contact_methods($methods){
+        $methods['facebook'] = __('Facebook','our-metabox');
+        $methods['twitter'] = __('Twitter','our-metabox');
+        $methods['linkedin'] = __('Linkedin','our-metabox');
+        $methods['skype'] = __('Skype','our-metabox');
+        return $methods;
     }
 
     function omb_admin_assets()
