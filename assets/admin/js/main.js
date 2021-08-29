@@ -64,8 +64,13 @@ var frame, gframe;
               // console.log(attachment);
               image_ids.push(attachment.id);
               image_urls.push(attachment.sizes.thumbnail);
+              $("#images_container").append(`<img src="${attachment.sizes.thumbnail.url}"/>`);
             }
             console.log(image_ids,image_urls);
+             $("#omb_images_id").val(image_ids.join(";"));
+             $("#omb_images_url").val(image_urls.join(";"));
+             
+
 
             // $("#omb_images_id").val(attachment.id);
             // $("#omb_images_url").val(attachment.sizes.thumbnail.url);
