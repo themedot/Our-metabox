@@ -228,7 +228,7 @@ class OurMetabox {
                     <button class="button" id="upload_images">{$button_label}</button>
                     <input type="hidden" name="omb_images_id" id="omb_images_id" value="{$images_id}"/>
                     <input type="hidden" name="omb_images_url" id="omb_images_url" value="{$images_url}"/>
-                    <div style="width:100%; height=auto;" id="images_container"></div>
+                    <div id="images_container"></div>
                 </div>
             </div>
             <div class="float_c"></div>
