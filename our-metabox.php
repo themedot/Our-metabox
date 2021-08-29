@@ -17,6 +17,7 @@ class OurMetabox {
         add_action('admin_menu', array($this,'omb_add_metabox'));
         add_action( 'save_post', array($this,'omb_save_metabox'));
         add_action( 'save_post', array($this,'omb_save_image'));
+        add_action( 'save_post', array($this,'omb_save_gallery'));
         add_action( 'admin_enqueue_scripts', array($this,'omb_admin_assets'));
     }
 
@@ -90,6 +91,19 @@ class OurMetabox {
 
         update_post_meta( $post_id, 'omb_image_id', $image_id);
         update_post_meta( $post_id, 'omb_image_url', $image_url);
+
+    }
+
+    public function omb_save_gallery($post_id)
+    {
+        if(!$this->is_secured('omb_gallery_nonce','omb_gallery',$post_id)){
+            return $post_id;
+        }
+        $images_id = isset($_POST["omb_images_id"])? $_POST["omb_images_id"]:"";
+        $images_url = isset($_POST["omb_images_url"])? $_POST["omb_images_url"]:"";
+
+        update_post_meta( $post_id, 'omb_images_id', $images_id);
+        update_post_meta( $post_id, 'omb_images_url', $images_url);
 
     }
 
@@ -194,11 +208,12 @@ class OurMetabox {
 
      echo $metabox_html;
     }
+
     public function omb_gallery_info($post)
     {
      
-     $image_id =esc_attr(get_post_meta( $post->ID, 'omb_images_id', true));
-     $image_url =esc_attr(get_post_meta( $post->ID, 'omb_images_url', true));  
+     $images_id =esc_attr(get_post_meta( $post->ID, 'omb_images_id', true));
+     $images_url =esc_attr(get_post_meta( $post->ID, 'omb_images_url', true));  
      wp_nonce_field( 'omb_gallery', 'omb_gallery_nonce');
      
      $metabox_html = <<<EOD
@@ -209,9 +224,9 @@ class OurMetabox {
                 </div>
                 <div class="input_c">
                     <button class="button" id="upload_image">Upload Image</button>
-                    <input type="hidden" name="omb_image_id" id="omb_image_id" value="{$image_id}"/>
-                    <input type="hidden" name="omb_image_url" id="omb_image_url" value="{$image_url}"/>
-                    <div id="image_container"></div>
+                    <input type="hidden" name="omb_images_id" id="omb_images_id" value="{$images_id}"/>
+                    <input type="hidden" name="omb_images_url" id="omb_images_url" value="{$images_url}"/>
+                    <div style="width:100%; height=auto;" id="images_container"></div>
                 </div>
             </div>
             <div class="float_c"></div>
